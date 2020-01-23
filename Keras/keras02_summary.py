@@ -4,15 +4,16 @@ import numpy as np
 x = np.array([1,2,3,4,5,6,7,8,9,10])
 y = np.array([1,2,3,4,5,6,7,8,9,10])
 
-# print(x.shape)
-# print(y.shape)
+print(x.shape) #벡터 - 1x10 행렬인데 (10,) : 벡터의 스칼라가 10개짜리 원소다 >> reshape해줘야 함
+print(y.shape)
 
 #2. 모델 구성
 from keras.models import Sequential
 from keras.layers import Dense
 model = Sequential()
 
-model.add(Dense(5, input_dim = 1))
+# model.add(Dense(5, input_dim = 1))
+model.add(Dense(5, input_shape = (1, )))
 model.add(Dense(2))
 model.add(Dense(3))
 model.add(Dense(1))
@@ -29,9 +30,7 @@ model.summary()
 #(None, 5) - input이 0행 1열, 노드 5개
 #param 10 
 # w값은 한 번 레이어가 내려갈 때마다 연산됨
-# 
-
-
+# Output Shape이 (None,n)  인 이유: 행무시 열우선 - None: 행이 없다
 
 '''
 #3. 훈련
