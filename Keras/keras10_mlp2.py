@@ -1,14 +1,14 @@
 import numpy as np 
 
 #1. 데이터 
-x = np.array([range(1,101), range(101,201)])
-y = np.array([range(1,101), range(101,201)])
+x = np.array([range(1,101), range(101,201), range(301,401)])
+y = np.array([range(101,201)])
+y2 = np.array(range(101,201))
 
-# print(x.shape) #(2,10)
-# print(y.shape) #(2,10)
+print(x.shape) #(3,100)
+print(y.shape) #(1,100)
+print(y2.shape) #(100,)
 
-# x2 = x.reshape(10,2)
-# y2 = y.reshape(10,2)
 x= np.transpose(x)
 y= np.transpose(y)
 
@@ -23,31 +23,31 @@ from keras.models import Sequential
 from keras.layers import Dense
 model = Sequential()
 
-model.add(Dense(28, input_dim =2 )) #input_dim>=2: 열(col)
-model.add(Dense(14))
-model.add(Dense(21))
-model.add(Dense(2))
+model.add(Dense(10, input_shape =(3, ))) #input_dim>=2: 열(col)
+model.add(Dense(4))
+model.add(Dense(5))
+model.add(Dense(1))
 
 model.summary()
 
 #3. 훈련- matrics: mse
-model.compile(loss='mse', optimizer='Adam', metrics=['mse'])
-model.fit(x_train,y_train,epochs=200, batch_size=10, validation_data=(x_val,y_val)) 
+model.compile(loss='mae', optimizer='Adam', metrics=['mae'])
+model.fit(x_train,y_train,epochs=100, batch_size=60, validation_data=(x_val,y_val)) 
     
 #4. 평가 예측
-loss, mse = model.evaluate(x_test,y_test, batch_size=1) #3.test
-print('mse:' , mse)
+loss, mae = model.evaluate(x_test,y_test, batch_size=1) #3.test
+print('mae:' , mae)
 print('loss:' , loss)
 
 
-x_prd = np.array([[501,502,503],[504,505,506]])
+x_prd = np.array([[501,502,503],[504,505,506], [507,508,509]])
 x_prd = np.transpose(x_prd)
 aaa = model.predict(x_prd, batch_size=1)
 print(aaa)
 
-y_predict = model.predict(x_test, batch_size=1)
+y_predict = model.predict(x_test, batch_size=20)
 
-'''
+
 #RMSE 구하기
 from sklearn.metrics import mean_squared_error
 def RMSE(y_test, y_predict):
@@ -62,6 +62,6 @@ print("RMSE : ", RMSE(y_test, y_predict))
 from sklearn.metrics import r2_score
 r2_y_predict = r2_score(y_test, y_predict)
 print("R2: ", r2_y_predict)
-'''
+
 
 
