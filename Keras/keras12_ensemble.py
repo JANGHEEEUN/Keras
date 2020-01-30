@@ -24,7 +24,6 @@ print(y1_train.shape) #(60,1)
 #2. 모델 구성
 from keras.models import Sequential, Model 
 from keras.layers import Dense, Input
-
 input1 = Input(shape=(3,))
 dense1 = Dense(5)(input1)
 dense2 = Dense(2)(dense1)
@@ -37,8 +36,11 @@ dense22 = Dense(2)(dense21)
 dense23 = Dense(3)(dense22)
 output2 = Dense(1)(dense23) #concatenate를 할 경우 output을 y1_train의 col과 맞추지 않아도 됨
 
-from keras.layers.merge import concatenate #concatenate: (모델을) 사슬처럼 엮다
-merge1 = concatenate([output1, output2]) 
+# from keras.layers.merge import concatenate #concatenate: (모델을) 사슬처럼 엮다 #concatenate function
+# merge1 = concatenate([output1, output2]) 
+
+from keras.layers.merge import Concatenate #Concatenate Class
+merge1 = Concatenate()([output1, output2])
 
 middle1 = Dense(4)(merge1)
 middle2 = Dense(7)(middle1)
