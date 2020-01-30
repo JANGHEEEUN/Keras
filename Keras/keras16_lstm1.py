@@ -2,7 +2,7 @@
 #1. 데이터
 from numpy import array
 from keras.models import Sequential
-from keras.layers import Dense, LSTM
+from keras.layers import Dense, LSTM, Reshape
 
 x = array([[1,2,3], [2,3,4],[3,4,5], [4,5,6], 
            [5,6,7], [6,7,8], [7,8,9], [8,9,10],
@@ -14,11 +14,25 @@ x = x.reshape(x.shape[0], x.shape[1], 1) # x를 (5,3,1)로 reshape - 뒤에 몇 
 
 # 2. 모델 구성
 model = Sequential()
-model.add(LSTM(10, activation = 'relu', input_shape=(3,1))) # input_shape(열, 몇 개씩 자르는지) #(3,1): 열이 3개고 데이터 셋을 1개씩 잘라서 작업
-model.add(Dense(5))                                        
+model.add(LSTM(10, activation = 'relu', return_sequences=True, input_shape=(3,1))) # input_shape(열, 몇 개씩 자르는지) #(3,1): 열이 3개고 데이터 셋을 1개씩 잘라서 작업
+model.add(LSTM(2, activation = 'relu', return_sequences=True)) #input(n,3,1)의 데이터가 시계열이라는 확신이 없음
+model.add(LSTM(3, activation = 'relu', return_sequences=True)) # (n,3,2) 역시 시계열일는 확신 없음
+model.add(LSTM(4, activation = 'relu', return_sequences=True)) 
+model.add(LSTM(5, activation = 'relu', return_sequences=True)) 
+model.add(LSTM(6, activation = 'relu', return_sequences=True)) 
+model.add(LSTM(7, activation = 'relu', return_sequences=True)) 
+model.add(LSTM(8, activation = 'relu', return_sequences=True)) 
+model.add(LSTM(9, activation = 'relu', return_sequences=True)) 
+model.add(LSTM(10, activation = 'relu', return_sequences=False)) 
+model.add(Dense(5, activation='linear'))                                        
 model.add(Dense(1))
+# model.add(LSTM(20, activation = 'relu', return_sequences=False)) #return_sequences false가 default
 
-# model.summary()
+#데이터가 백만개여도 lstm을 많이 쓰면 성능이 안 좋아짐
+#Cnn은 여러번 엮을수로 더 좋음 하지만 시계열은 여러번 엮을수록 데이터가 점점 더 시계열이라는 확신을 잃어버리므로 사용하지 않음
+
+
+model.summary()
 
 #3. 모델 훈련
 from keras.callbacks import EarlyStopping
