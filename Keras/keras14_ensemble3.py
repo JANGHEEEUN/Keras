@@ -57,10 +57,18 @@ model = Model(inputs =input1, outputs=[output_1, output_2, output_3])
 model.summary()
 #제일 하단에 함수형 모델임을 명시
 
+#early stopping / tensorboard
+from keras.callbacks import EarlyStopping, TensorBoard
+tb_hist = TensorBoard(log_dir='./graph',
+                      histogram_freq=0,
+                      write_graph=True,
+                      write_images=True )
+
+early_stopping = EarlyStopping(monitor='loss', patience=100, mode='auto') 
 
 #3. 훈련- matrics: mse
 model.compile(loss='mse', optimizer='Adam', metrics=['mse'])
-model.fit(x1_train, [y1_train, y2_train, y3_train],epochs=200, batch_size=1, validation_data=(x1_val, [y1_val, y2_val, y3_val])) 
+model.fit(x1_train, [y1_train, y2_train, y3_train],epochs=200, batch_size=1, validation_data=(x1_val, [y1_val, y2_val, y3_val]), callbacks=[early_stopping, tb_hist]) 
 
 
 #4. 평가 예측

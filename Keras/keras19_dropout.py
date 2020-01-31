@@ -20,6 +20,7 @@ model.add(Dropout(0.2))
 model.add(Dense(100)) #batchnormalization이 적용되어 다음 연산이 더 잘되게!
 model.add(BatchNormalization()) #BatchNormalization (정규화) - 가중치들의 값이 계산을 할 때마다 예쁘게 되어 있는 것이 아니라 흩어져 있음 
                                 #우리가 standardScaler를 했을 때 한 군데로 이쁘게 모아줌 이것처럼 가중치를 예쁘게 정리해서 다음에 넘겨주면 더 좋은 결과를 얻을 수 있을 것임
+                                #즉, batchNormalization 대상 = 가중치
 model.add(Dense(100))
 model.add(Dense(100))
 model.add(Dense(100))
