@@ -53,7 +53,7 @@ model = Sequential()
 model = Sequential()
 model.add(LSTM(10, activation = 'relu', input_shape=(9,1))) # input_shape(열, 몇 개씩 자르는지) #(3,1): 열이 3개고 데이터 셋을 1개씩 잘라서 작업
 model.add(Dense(5))                                         # 1개씩 자르면 결과는 잘 나옴 but 느림 <-> 2개씩 자르면 빠르지만 결과에 영향 << 하이퍼 파라미터 수정
-model.Wdd(Dense(3))
+model.add(Dense(3))
 
 model.summary()
 

@@ -53,13 +53,13 @@ model.summary()
 
 
 model.compile(loss='mse', optimizer='Adam', metrics=['mae']) # metrics mae = 반환값 2개
-model.fit(x, y, epochs=100, batch_size=1, verbose=99)  #verbose [default] = 1 - verbose는 fitting 진행 상황을 보여줌
+model.fit([x1,x2], [y1,y2], epochs=100, batch_size=1, verbose=99)  #verbose [default] = 1 - verbose는 fitting 진행 상황을 보여줌
 #verbose 2: 막대 빼고 간결하게
 #오래된 데이터라면 verbose0을 두는 것이 좋음
 
 
 #4. 평가 예측
-loss, mae = model.evaluate(x, y, batch_size=1) #3.test
+loss, mae = model.evaluate([x1,x2], [y1,y2], batch_size=1) #3.test
 
 print('loss: ' , loss) # mse 출력
 print('mae: ', mae)

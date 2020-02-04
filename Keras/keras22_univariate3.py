@@ -52,7 +52,5 @@ print(x_prd.shape)
 aaa = model.predict(x_prd, batch_size=1)
 print(aaa)
 
-'''
 0,1,2,3 / 4
 1,2,3,4 / 5
-'''
