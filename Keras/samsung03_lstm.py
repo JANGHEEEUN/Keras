@@ -45,14 +45,16 @@ scaler.fit(x_train)
 x_train_scaled = scaler.transform(x_train)
 x_test_scaled = scaler.transform(x_test)
 
+x_train_scaled = x_train_scaled.reshape(x_train_scaled.shape[0], 5, 5)
+x_test_scaled = x_test_scaled.reshape(x_test_scaled.shape[0], 5, 5) #25,1은 5개가 한 데이터에 영향을 줘야하는ㄷ 연속된 25개의 데이터가 계속 영향을 줌
+
 from keras.models import Sequential
-from keras.layers import Dense, Input
+from keras.layers import Dense, LSTM
 
 model = Sequential()
 
-model.add(Dense(25, input_shape =(25, )))
-model.add(Dense(16))
-model.add(Dense(4))
+model.add(LSTM(10, activation = 'relu', input_shape=(5,5)))
+model.add(Dense(5))                                         
 model.add(Dense(1))
 
 model.summary()
