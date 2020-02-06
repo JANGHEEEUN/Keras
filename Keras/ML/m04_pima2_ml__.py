@@ -47,7 +47,7 @@ numpy.random.seed(seed)
 tf.set_random_seed(seed)
 
 # 데이터 로드
-dataset = numpy.loadtxt("./data/pima-indians-diabetes.csv", delimiter=',')
+dataset = numpy.loadtxt("./Keras/data/pima-indians-diabetes.csv", delimiter=',')
 x = dataset[:,0:8]
 y = dataset[:,8]
 
