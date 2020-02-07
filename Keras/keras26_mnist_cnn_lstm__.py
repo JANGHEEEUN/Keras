@@ -28,14 +28,27 @@ print(y_train.shape) # (60000, 10) # onehot encoding으로 10개의 값으로 �
 
 from keras.layers import Reshape
 
-model = Sequential();
-model.add(Conv2D(16, (2,2), input_shape = (28,28,1)))
-model.add(Reshape((-1,4)))
-model.add(LSTM(256,input_shape=(28*7,4)))
-model.add(Dense(16))
-model.add(Dense(10, activation='softmax')) #다중분류는 무조건 softmax
+model = Sequential()
+model.add(Conv2D(16, (2,2), strides=(2,2), padding='same',
+                 activation = 'relu',
+                input_shape=(28, 28, 1)))
+# model.add(MaxPooling2D(2,2))
+# model.add(Conv2D(16, (2,2), activation='relu', padding='same'))
+model.add(Reshape((14*4,14*4)))
+model.add(LSTM(4, activation='relu', input_shape=(14*4,14*4)))
+model.add(Dense(10, activation='softmax'))
 
 model.summary()
+
+
+# model = Sequential();
+# model.add(Conv2D(16, (2,2), input_shape = (28,28,1)))
+# model.add(Reshape((-1,4)))
+# model.add(LSTM(256,input_shape=(28*7,4)))
+# model.add(Dense(16))
+# model.add(Dense(10, activation='softmax')) #다중분류는 무조건 softmax
+# model.summary()
+
 
 model.compile(loss='categorical_crossentropy', optimizer = 'adam', metrics=['accuracy'])
 #다중분류에 accuracy 사용가능한 이유
@@ -45,10 +58,9 @@ model.compile(loss='categorical_crossentropy', optimizer = 'adam', metrics=['acc
 
 early_stopping = EarlyStopping(monitor='loss', patience=20)
 
-model.fit(x_train, y_train, validation_split=0.2, epochs=100, batch_size=8, verbose=2,
+model.fit(x_train, y_train, validation_split=0.2, epochs=2, batch_size=100, verbose=2,
           callbacks=[early_stopping])
 
 acc = model.evaluate(x_test, y_test)
 
 print(acc)
-
