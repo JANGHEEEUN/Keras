@@ -15,8 +15,9 @@ y_train = np.array(y_train)
 
 # 2. 모델
 model = Sequential()
-model.add(Dense(10, input_shape =(2, )))
-model.add(Dense(4))
+model.add(Dense(10, input_shape =(2, ), activation='relu'))
+model.add(Dense(8))
+model.add(Dense(2))
 model.add(Dense(5))
 model.add(Dense(1, activation='sigmoid'))
 
